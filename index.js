@@ -1,0 +1,10 @@
+import * as preact from "https://unpkg.com/preact@latest?module";
+import * as hooks from "https://unpkg.com/preact@latest/hooks/dist/hooks.module.js?module";
+import htm from "https://unpkg.com/htm?module";
+window.preact = preact;
+window.hooks = hooks;
+const { h, render } = preact;
+const html = htm.bind(h);
+window.html = html;
+import App from "./App.js";
+render(html`<${App(preact, hooks)} />`, document.getElementById("container"));
