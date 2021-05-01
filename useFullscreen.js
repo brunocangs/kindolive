@@ -4,13 +4,13 @@ const useFullscreen = (hooks) => (ref) => {
   const requestFs = useCallback(() => {
     if (ref.current) {
       if (!isFullscreen) ref.current.requestFullscreen();
+      else document.exitFullscreen();
     }
-  }, [ref]);
+  }, [ref, isFullscreen, setIsFullscreen]);
   useEffect(() => {
     const changeHandler = () => {
-      //NB the following line requrires the libary from John Dyer
-      var fs = !!window.fullScreenElement;
-      setIsFullscreen(fs);
+      console.log("FULLSCREEN CHANGING >>>>>>>", isFullscreen);
+      setIsFullscreen((prev) => !prev);
     };
     document.addEventListener("fullscreenchange", changeHandler);
     document.addEventListener("webkitfullscreenchange", changeHandler);
@@ -19,9 +19,8 @@ const useFullscreen = (hooks) => (ref) => {
       document.removeEventListener("fullscreenchange", changeHandler);
       document.removeEventListener("webkitfullscreenchange", changeHandler);
       document.removeEventListener("mozfullscreenchange", changeHandler);
-      setIsFullscreen(false);
     };
-  }, [ref]);
+  }, [ref, isFullscreen, setIsFullscreen]);
   return { requestFs, isFullscreen };
 };
 

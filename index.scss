@@ -1,3 +1,24 @@
+@mixin desktop {
+  @media screen and (min-width: 1000px) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media screen and (min-width: 1000px) {
+    @content;
+  }
+}
+@mixin portrait {
+  @media screen and (orientation: portrait) {
+    @content;
+  }
+}
+@mixin landscape {
+  @media screen and (orientation: landscape) {
+    @content;
+  }
+}
+$LIVE_CHAT: 'iframe[title="YouTube chat"]';
 /* MOBILE */
 #youtube-player {
   flex: 1;
@@ -5,7 +26,6 @@
   display: flex;
   position: relative;
 }
-
 #theatre-mode {
   position: absolute;
   top: 100%;
@@ -30,8 +50,7 @@
   font-style: normal;
   text-align: center;
 }
-
-iframe[title="YouTube chat"] {
+#{$LIVE_CHAT} {
   flex: 1;
   min-height: 550px;
 }
@@ -42,19 +61,19 @@ iframe[title="YouTube chat"] {
   height: unset;
   flex-direction: column;
   display: flex;
-}
-@media screen and (min-width: 1000px) {
-  .react-container {
+  @include desktop() {
     height: 550px;
   }
-}
-.react-container:fullscreen #youtube-player {
-  height: fit-content;
-  flex: unset;
-}
-.react-container:fullscreen iframe[title="YouTube chat"] {
-  min-height: unset;
-  height: auto;
+  &:fullscreen {
+    #youtube-player {
+      height: fit-content;
+      flex: unset;
+    }
+    #{$LIVE_CHAT} {
+      min-height: unset;
+      height: auto;
+    }
+  }
 }
 
 .react-container > div > div {
@@ -80,7 +99,6 @@ iframe[title="YouTube chat"] {
     align-items: center;
     flex-direction: row;
   }
-
   .react-container > div {
     position: absolute;
     top: 0;
@@ -89,21 +107,17 @@ iframe[title="YouTube chat"] {
     background-color: black;
     left: -100px;
   }
-
-  iframe[title="YouTube chat"] {
+  #{$LIVE_CHAT} {
     flex: unset !important;
   }
-
   #youtube-player {
     flex: 3;
     margin-bottom: 0px;
   }
-
   #theatre-mode {
     top: calc(100% + 14px);
     bottom: -54px;
   }
-
   #theatre-mode button {
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: rgba(255, 255, 255, 0.3);
@@ -111,29 +125,28 @@ iframe[title="YouTube chat"] {
     margin: auto;
   }
 }
+
 /* FULLSCREEN */
 @media screen and (display-mode: fullscreen) and (orientation: portrait) {
   .react-container > div {
     right: 0;
     left: 0;
   }
-
-  iframe[title="YouTube chat"] {
+  #{$LIVE_CHAT} {
     height: 100%;
     flex: 2;
   }
 }
+
 @media all and (display-mode: fullscreen) and (orientation: landscape) {
   .react-container > div > div {
     flex-direction: row;
   }
-
   .react-container > div {
     right: 0;
     left: 0;
   }
-
-  iframe[title="YouTube chat"] {
+  #{$LIVE_CHAT} {
     height: 100%;
     flex: 2;
   }
@@ -155,5 +168,3 @@ iframe[title="YouTube chat"] {
   white-space: pre-wrap;
   margin-bottom: 16px;
 }
-
-/*# sourceMappingURL=index.css.map */

@@ -1,21 +1,17 @@
 import makeUseFs from "./useFullscreen.js";
-const YOUTUBE_VID_ID = "eGD_zPZD8-A"; // "bmVKaAV_7-A"; //
+const YOUTUBE_VID_ID = "bmVKaAV_7-A"; // "eGD_zPZD8-A"; //
 
-export default (preact, hooks) => {
-  const { useState, useRef } = hooks;
+export default (_, hooks) => {
+  const { useRef } = hooks;
   const useFullscreen = makeUseFs(hooks);
   // Initialize htm with Preact
   const Player = (props) => {
-    const { isTheatre, requestFs } = props;
-    console.log(props);
+    const { isFullscreen, requestFs } = props;
     const baseWidth = 560;
     const baseHeight = 315;
     const ASPECT_RATIO = baseWidth / baseHeight;
     return html`
-      <div
-        style=${{ flex: 3, display: "flex", position: "relative" }}
-        id="youtube-player"
-      >
+      <div id="youtube-player">
         <div
           style=${{
             position: "relative",
@@ -47,7 +43,7 @@ export default (preact, hooks) => {
         </div>
         <div id="theatre-mode">
           <button onClick=${requestFs}>
-            ${isTheatre ? "Exit" : "Enter"} Fullscreen w/ chat
+            ${isFullscreen ? "Exit theater mode" : "Theater mode"}
           </button>
         </div>
       </div>
@@ -60,7 +56,6 @@ export default (preact, hooks) => {
         src="https://www.youtube.com/live_chat?v=${YOUTUBE_VID_ID}&embed_domain=thereignofkindo.com&live=true"
         frameborder="0"
         title="YouTube chat"
-        style=${{ alignSelf: "stretch" }}
       ></iframe>
     `;
   };
