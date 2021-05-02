@@ -1,6 +1,8 @@
 import * as preact from "https://unpkg.com/preact@latest?module";
 import * as hooks from "https://unpkg.com/preact@latest/hooks/dist/hooks.module.js?module";
 import htm from "https://unpkg.com/htm?module";
+const YOUTUBE_VID_ID = "4UFXb3DhMFQ"; // "bmVKaAV_7-A"; // "g_t-5C8bVIE"; //
+
 window.preact = preact;
 window.hooks = hooks;
 const { h, render } = preact;
@@ -17,7 +19,7 @@ if (hasTicketInSearch) {
 } else {
   if (hasTicket) {
     render(
-      html`<${App(preact, hooks)} />`,
+      html`<${App(preact, hooks, YOUTUBE_VID_ID)} />`,
       document.getElementById("container")
     );
   } else {

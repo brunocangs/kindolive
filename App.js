@@ -1,7 +1,6 @@
 import makeUseFs from "./useFullscreen.js";
-const YOUTUBE_VID_ID = "4UFXb3DhMFQ"; // "bmVKaAV_7-A"; // "g_t-5C8bVIE"; //
 
-export default (_, hooks) => {
+export default (_, hooks, YOUTUBE_VID_ID) => {
   const { useRef } = hooks;
   const useFullscreen = makeUseFs(hooks);
   // Initialize htm with Preact
