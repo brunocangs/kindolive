@@ -3,154 +3,144 @@
     @content;
   }
 }
-@mixin mobile {
-  @media screen and (min-width: 1000px) {
-    @content;
-  }
-}
-@mixin portrait {
-  @media screen and (orientation: portrait) {
-    @content;
-  }
-}
 @mixin landscape {
   @media screen and (orientation: landscape) {
     @content;
   }
 }
 $LIVE_CHAT: 'iframe[title="YouTube chat"]';
-/* MOBILE */
-#youtube-player {
-  flex: 1;
-  margin-bottom: 56px;
-  display: flex;
-  position: relative;
-}
-#theatre-mode {
-  position: absolute;
-  top: 100%;
-  bottom: -40px;
-  right: 0;
-  left: 0;
-  display: flex;
-}
+$CONTAINER: "#react-container > div";
 
-#theatre-mode button {
-  flex: 1;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin: 8px;
-  height: 100%;
-  color: #afafaf;
-  background-color: transparent;
-  font-family: "proxima-nova";
-  line-height: 1.3em;
-  letter-spacing: 0px;
-  font-weight: 700;
-  font-style: normal;
-  text-align: center;
-}
-#{$LIVE_CHAT} {
-  flex: 1;
-  min-height: 550px;
-}
-
-.react-container {
+#react-container {
   width: 100%;
-  position: relative;
-  height: unset;
-  flex-direction: column;
-  display: flex;
-  @include desktop() {
-    height: 550px;
-  }
-  &:fullscreen {
-    #youtube-player {
-      height: fit-content;
-      flex: unset;
-    }
-    #{$LIVE_CHAT} {
-      min-height: unset;
-      height: auto;
-    }
-  }
-}
-
-.react-container > div > div {
-  width: 100%;
-  flex-direction: column;
-  display: flex;
-  background-color: transparent;
-  flex: 1;
-}
-
-/* 1000 x 550 */
-.react-container > div {
-  position: relative;
-  background-color: transparent;
-  display: flex;
-  flex: 1;
-}
-
-/* LARGE SCREEN */
-@media screen and (min-width: 1000px) {
-  .react-container > div > div {
-    background-color: black;
-    align-items: center;
-    flex-direction: row;
-  }
-  .react-container > div {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: -100px;
-    background-color: black;
-    left: -100px;
-  }
   #{$LIVE_CHAT} {
-    flex: unset !important;
-  }
-  #youtube-player {
-    flex: 3;
-    margin-bottom: 0px;
-  }
-  #theatre-mode {
-    top: calc(100% + 14px);
-    bottom: -54px;
+    height: 550px;
+    @include landscape() {
+      // mobile-landscape
+      @include desktop() {
+        height: 100%;
+      }
+    }
   }
   #theatre-mode button {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.3);
-    max-width: 400px;
-    margin: auto;
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+  }
+  > div {
+    // mobile-portrait
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: relative;
+    @include landscape() {
+      // mobile-landscape
+      @include desktop() {
+        // desktop-landscape
+        height: 550px;
+      }
+    }
+    @include desktop() {
+      // desktop-portrait
+    }
+  }
+  > div > div {
+    flex: 1;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    @include landscape() {
+      // landscape-mobile
+      @include desktop() {
+        // landscape-desktop
+        position: absolute;
+        flex: unset;
+        flex-direction: row;
+        background-color: black;
+        align-items: center;
+        right: -90px;
+        left: -90px;
+      }
+    }
+    #youtube-player {
+      margin-bottom: 46px;
+      @include landscape() {
+        margin-bottom: unset;
+      }
+    }
+  }
+  #theatre-mode {
+    position: absolute;
+    top: 100%;
+    bottom: -30px;
+    right: 0;
+    left: 0;
+    display: flex;
+    button {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin: 8px 4px;
+      height: 100%;
+      color: #afafaf;
+      background-color: transparent;
+      font-family: "proxima-nova";
+      line-height: 1.3em;
+      letter-spacing: 0px;
+      font-weight: 700;
+      font-style: normal;
+      text-align: center;
+      @include desktop() {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.3);
+        max-width: 400px;
+        margin: 15px auto;
+      }
+    }
+  }
+  #youtube-player {
+    flex: 2;
+    iframe {
+      width: 1px;
+    }
+  }
+  &:fullscreen {
+    // Portrait-mobile-fullscreen
+    #youtube-player {
+      flex: unset;
+      @include desktop() {
+        flex: 2;
+      }
+    }
+    #{$LIVE_CHAT} {
+      height: 100%;
+    }
+    @include landscape() {
+      // landscape-mobile-fullscreen
+      // > div > div {
+      //   flex: unset;
+      //   flex-direction: row;
+      //   background-color: black;
+      //   align-items: center;
+      // }
+      @include desktop() {
+        > div {
+          height: 100vh;
+        }
+        > div > div {
+          right: 0;
+          left: 0;
+        }
+        // landscape-desktop-fullscreen
+      }
+    }
+    @include desktop() {
+      // Portrait-desktop-fullscreen
+    }
   }
 }
 
-/* FULLSCREEN */
-@media screen and (display-mode: fullscreen) and (orientation: portrait) {
-  .react-container > div {
-    right: 0;
-    left: 0;
-  }
-  #{$LIVE_CHAT} {
-    height: 100%;
-    flex: 2;
-  }
-}
-
-@media all and (display-mode: fullscreen) and (orientation: landscape) {
-  .react-container > div > div {
-    flex-direction: row;
-  }
-  .react-container > div {
-    right: 0;
-    left: 0;
-  }
-  #{$LIVE_CHAT} {
-    height: 100%;
-    flex: 2;
-  }
-}
 .title {
   -webkit-text-size-adjust: 100%;
   color: #212121;
@@ -163,7 +153,6 @@ $LIVE_CHAT: 'iframe[title="YouTube chat"]';
   font-size: 27px;
   margin: 0 0 28px;
   margin-top: 0;
-  margin-bottom: 0;
   text-align: center;
   white-space: pre-wrap;
   margin-bottom: 16px;

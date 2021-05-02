@@ -4,13 +4,20 @@ const useFullscreen = (hooks) => (ref) => {
   const requestFs = useCallback(() => {
     if (ref.current) {
       if (!isFullscreen) ref.current.requestFullscreen();
-      else document.exitFullscreen();
+      else {
+        try {
+          document.exitFullscreen();
+        } catch (e) {
+          // Not fullscreen
+          setIsFullscreen(false);
+          ref.current.requestFullscreen();
+        }
+      }
     }
   }, [ref, isFullscreen, setIsFullscreen]);
   useEffect(() => {
-    const changeHandler = () => {
-      console.log("FULLSCREEN CHANGING >>>>>>>", isFullscreen);
-      setIsFullscreen((prev) => !prev);
+    const changeHandler = (e) => {
+      setIsFullscreen(!!document.fullscreenElement);
     };
     document.addEventListener("fullscreenchange", changeHandler);
     document.addEventListener("webkitfullscreenchange", changeHandler);

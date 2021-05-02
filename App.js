@@ -1,5 +1,5 @@
 import makeUseFs from "./useFullscreen.js";
-const YOUTUBE_VID_ID = "bmVKaAV_7-A"; // "eGD_zPZD8-A"; //
+const YOUTUBE_VID_ID = "eGD_zPZD8-A"; // "bmVKaAV_7-A"; // "g_t-5C8bVIE"; //
 
 export default (_, hooks) => {
   const { useRef } = hooks;
@@ -9,7 +9,7 @@ export default (_, hooks) => {
     const { isFullscreen, requestFs } = props;
     const baseWidth = 560;
     const baseHeight = 315;
-    const ASPECT_RATIO = baseWidth / baseHeight;
+    const ASPECT_RATIO = 16 / 9;
     return html`
       <div id="youtube-player">
         <div
@@ -40,11 +40,11 @@ export default (_, hooks) => {
               style=${{ flex: 1 }}
             ></iframe>
           </div>
-        </div>
-        <div id="theatre-mode">
-          <button onClick=${requestFs}>
-            ${isFullscreen ? "Exit theater mode" : "Theater mode"}
-          </button>
+          <div id="theatre-mode">
+            <button onClick=${requestFs}>
+              ${isFullscreen ? "Exit theater mode" : "Theater mode"}
+            </button>
+          </div>
         </div>
       </div>
     `;
@@ -65,7 +65,11 @@ export default (_, hooks) => {
     const { requestFs, isFullscreen } = useFullscreen(ref);
     return html`
       <h1 className="title">LIVE STREAM CONCERT</h1>
-      <div className="react-container" ref=${ref}>
+      <div
+        id="react-container"
+        ref=${ref}
+        className=${isFullscreen ? `fullscreen` : ``}
+      >
         <div>
           <div>
             <${Player} requestFs=${requestFs} isFullscreen=${isFullscreen} />
